@@ -1,0 +1,26 @@
+global
+    daemon
+    maxconn 256
+
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+<% if node['haproxy']['enable_admin'] %>
+listen stats 0.0.0.0:8000
+    stats uri /
+    stats realm haproxy-stats-realm
+    stats auth admin:password
+    stats admin if TRUE
+<% end %>
+
+frontend tomcatsample
+    bind *:80
+    default_backend servers
+
+backend servers
+    <% @tomcat_servers.each do |server| %>
+    <%= "server #{server['hostname']} #{server['ipaddress']}:#{server['tomcat']['port']} maxconn #{server['haproxy']['member_max_connections']}" %>
+    <% end %>

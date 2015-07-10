@@ -1,0 +1,11 @@
+name 'load_balanced_tomcat_sample'
+maintainer 'Austin Heiman'
+maintainer_email 'atheimanksu@gmail.com'
+license 'all_rights'
+description 'Installs / configures Tomcat sample app load balanced by haproxy.'
+long_description 'Provides '
+version '0.2.15'
+
+depends 'haproxy', '~> 1.6.6'
+depends 'java', '~> 1.31.0'
+depends 'tomcat', '~> 0.17.3'
